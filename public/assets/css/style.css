@@ -1,0 +1,510 @@
+/*!
+ * ========= INFORMATION ============================
+ * - document:  Bubble Menu - easily create a flyouts bubble menu.
+ * - brand:     Wow-Company
+ * - brand-url: https://wow-company.com/
+ * - store-url: https://wow-estore.com/
+ * - author:    Dmytro Lobov
+ * - url:       https://wow-estore.com/item/bubble-menu-pro/
+ * ====================================================== */
+.bubble-menu,
+.bubble-menu * {
+  box-sizing: border-box;
+  line-height: 1;
+}
+
+.bubble-menu {
+  all: unset;
+}
+.bubble-menu ul, .bubble-menu li, .bubble-menu a, .bubble-menu button {
+  all: unset;
+}
+@media print {
+  .bubble-menu {
+    display: none;
+  }
+}
+
+.bubble-menu {
+  --size: 16px;
+  --shadow: none;
+  --color: #14102C;
+  --background: #ffffff;
+  --label-color: #ffffff;
+  --label-background: #14102C;
+  --duration: 0.5s;
+  --margin-block: 0;
+  --margin-inline: 0;
+  --radius: 0;
+  --label-radius: 0;
+  --clip-path: none;
+  --popover-inline: 270px;
+  --popover-size: 16px;
+  --popover-block: 550px;
+  --popover-backdrop: rgba(0, 0, 0, 0.85);
+  --popover-border-color: #222222;
+  --popover-padding: 10px;
+  z-index: 99999;
+  position: fixed;
+  font-size: var(--size);
+  margin-block: var(--margin-block);
+  margin-inline: var(--margin-inline);
+  visibility: hidden;
+  opacity: 0;
+}
+.bubble-menu.-show {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+.bubble-menu.-hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+.bubble-menu.-hidden .bm-toggle.-visible[data-label]::after {
+  visibility: hidden;
+}
+.bubble-menu .bm-label {
+  border: none;
+  clip: rect(0, 0, 0, 0);
+  height: 0.01em;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 0.01em;
+}
+.bubble-menu .bm-toggle,
+.bubble-menu .bm-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  color: var(--color);
+  background-color: var(--background);
+  transition-property: color, background-color;
+  transition-duration: var(--duration), var(--duration);
+  transition-timing-function: ease, ease;
+  border-radius: var(--radius);
+  clip-path: var(--clip-path);
+}
+.bubble-menu .bm-toggle:hover, .bubble-menu .bm-toggle:focus, .bubble-menu .bm-toggle:active, .bubble-menu .bm-toggle:focus-within,
+.bubble-menu .bm-link:hover,
+.bubble-menu .bm-link:focus,
+.bubble-menu .bm-link:active,
+.bubble-menu .bm-link:focus-within {
+  color: var(--background);
+  background-color: var(--color);
+}
+.bubble-menu .bm-toggle[data-label]::after,
+.bubble-menu .bm-link[data-label]::after {
+  position: absolute;
+  inset: -9999px auto auto -9999px;
+  content: attr(data-label);
+  padding: 0.5em 0.75em;
+  opacity: 0;
+  border-radius: var(--label-radius);
+  white-space: nowrap;
+  z-index: 3;
+  background: var(--label-background);
+  font-style: normal;
+  font-size: calc(var(--size) - 2px);
+  line-height: 1;
+  color: var(--label-color);
+  margin-inline: 2px;
+  visibility: hidden;
+}
+.bubble-menu .bm-toggle.-visible.-top-right[data-label]::after, .bubble-menu .bm-toggle:hover.-top-right[data-label]::after,
+.bubble-menu .bm-link.-visible.-top-right[data-label]::after,
+.bubble-menu .bm-link:hover.-top-right[data-label]::after {
+  inset: auto auto 100% 100%;
+}
+.bubble-menu .bm-toggle.-visible.-top-right-important[data-label]::after, .bubble-menu .bm-toggle:hover.-top-right-important[data-label]::after,
+.bubble-menu .bm-link.-visible.-top-right-important[data-label]::after,
+.bubble-menu .bm-link:hover.-top-right-important[data-label]::after {
+  inset: auto auto 100% 100% !important;
+}
+.bubble-menu .bm-toggle.-visible.-top-left[data-label]::after, .bubble-menu .bm-toggle:hover.-top-left[data-label]::after,
+.bubble-menu .bm-link.-visible.-top-left[data-label]::after,
+.bubble-menu .bm-link:hover.-top-left[data-label]::after {
+  inset: auto 100% 100% auto;
+}
+.bubble-menu .bm-toggle.-visible.-top-left-important[data-label]::after, .bubble-menu .bm-toggle:hover.-top-left-important[data-label]::after,
+.bubble-menu .bm-link.-visible.-top-left-important[data-label]::after,
+.bubble-menu .bm-link:hover.-top-left-important[data-label]::after {
+  inset: auto 100% 100% auto !important;
+}
+.bubble-menu .bm-toggle.-visible.-left[data-label]::after, .bubble-menu .bm-toggle:hover.-left[data-label]::after,
+.bubble-menu .bm-link.-visible.-left[data-label]::after,
+.bubble-menu .bm-link:hover.-left[data-label]::after {
+  inset: 50% 100% auto auto;
+  transform: translateY(-50%);
+  margin-inline: 10px;
+}
+.bubble-menu .bm-toggle.-visible.-left-important[data-label]::after, .bubble-menu .bm-toggle:hover.-left-important[data-label]::after,
+.bubble-menu .bm-link.-visible.-left-important[data-label]::after,
+.bubble-menu .bm-link:hover.-left-important[data-label]::after {
+  inset: 50% 100% auto auto !important;
+  transform: translateY(-50%) !important;
+  margin-inline: 10px !important;
+}
+.bubble-menu .bm-toggle.-visible.-right[data-label]::after, .bubble-menu .bm-toggle:hover.-right[data-label]::after,
+.bubble-menu .bm-link.-visible.-right[data-label]::after,
+.bubble-menu .bm-link:hover.-right[data-label]::after {
+  inset: 50% auto auto 100%;
+  transform: translateY(-50%);
+  margin-inline: 10px;
+}
+.bubble-menu .bm-toggle.-visible.-right-important[data-label]::after, .bubble-menu .bm-toggle:hover.-right-important[data-label]::after,
+.bubble-menu .bm-link.-visible.-right-important[data-label]::after,
+.bubble-menu .bm-link:hover.-right-important[data-label]::after {
+  inset: 50% auto auto 100% !important;
+  transform: translateY(-50%) !important;
+  margin-inline: 10px !important;
+}
+.bubble-menu .bm-toggle.-visible.-bottom-right[data-label]::after, .bubble-menu .bm-toggle:hover.-bottom-right[data-label]::after,
+.bubble-menu .bm-link.-visible.-bottom-right[data-label]::after,
+.bubble-menu .bm-link:hover.-bottom-right[data-label]::after {
+  inset: 100% auto auto 100%;
+}
+.bubble-menu .bm-toggle.-visible.-bottom-right-important[data-label]::after, .bubble-menu .bm-toggle:hover.-bottom-right-important[data-label]::after,
+.bubble-menu .bm-link.-visible.-bottom-right-important[data-label]::after,
+.bubble-menu .bm-link:hover.-bottom-right-important[data-label]::after {
+  inset: 100% auto auto 100% !important;
+}
+.bubble-menu .bm-toggle.-visible.-bottom-left[data-label]::after, .bubble-menu .bm-toggle:hover.-bottom-left[data-label]::after,
+.bubble-menu .bm-link.-visible.-bottom-left[data-label]::after,
+.bubble-menu .bm-link:hover.-bottom-left[data-label]::after {
+  inset: 100% 100% auto auto;
+}
+.bubble-menu .bm-toggle.-visible.-bottom-left-important[data-label]::after, .bubble-menu .bm-toggle:hover.-bottom-left-important[data-label]::after,
+.bubble-menu .bm-link.-visible.-bottom-left-important[data-label]::after,
+.bubble-menu .bm-link:hover.-bottom-left-important[data-label]::after {
+  inset: 100% 100% auto auto !important;
+}
+.bubble-menu .bm-toggle {
+  position: relative;
+  block-size: calc(var(--size) * 3);
+  inline-size: calc(var(--size) * 3);
+  z-index: 1;
+  font-size: 1.6875em;
+}
+.bubble-menu .bm-toggle .bm-icon {
+  transition: rotate 0.5s;
+}
+.bubble-menu .bm-toggle img.bm-icon {
+  display: block;
+  max-inline-size: calc(var(--size) * 2);
+  max-block-size: calc(var(--size) * 2);
+}
+.bubble-menu .bm-toggle.-paused:hover .bm-icon {
+  animation-play-state: paused;
+}
+.bubble-menu .bm-toggle.-visible[data-label]::after, .bubble-menu .bm-toggle:hover[data-label]::after {
+  opacity: 1;
+  transition: opacity 0.2s;
+  transition-delay: var(--duration);
+  visibility: visible;
+}
+.bubble-menu .bm-link {
+  block-size: calc(var(--size) * 2.375);
+  inline-size: calc(var(--size) * 2.375);
+  font-size: 1.25em;
+  transition-property: color, background-color, rotate, scale;
+}
+.bubble-menu .bm-link.-paused:hover .bm-icon {
+  animation-play-state: paused;
+}
+.bubble-menu .bm-link img.bm-icon {
+  display: block;
+  max-inline-size: calc(var(--size) * 1.25);
+  max-block-size: calc(var(--size) * 1.25);
+}
+.bubble-menu .bm-item {
+  position: absolute;
+  transform-origin: 50% 100px;
+  top: calc((3em - 2.375em) / 2);
+  left: calc((3em - 2.375em) / 2);
+}
+.bubble-menu .bm-icon {
+  --icon-rotate: 0deg;
+  --icon-delay: 0s;
+  --icon-duration: 1s;
+  --icon-count: infinite;
+  --icon-scale: none;
+  rotate: var(--icon-rotate);
+  scale: var(--icon-scale);
+}
+.bubble-menu .bm-icon.-flip-horizontal {
+  --icon-scale: -1 1;
+}
+.bubble-menu .bm-icon.-flip-vertical {
+  --icon-scale: 1 -1;
+}
+.bubble-menu .bm-icon.-flip-both {
+  --icon-scale: -1 -1;
+}
+.bubble-menu .bm-icon.-beat, .bubble-menu .bm-icon.-bounce, .bubble-menu .bm-icon.-fade, .bubble-menu .bm-icon.-beat-fade, .bubble-menu .bm-icon.-flip, .bubble-menu .bm-icon.-shake, .bubble-menu .bm-icon.-spin {
+  animation-delay: var(--icon-delay);
+  animation-direction: normal;
+  animation-duration: var(--icon-duration);
+  animation-iteration-count: var(--icon-count);
+}
+.bubble-menu .bm-icon.-beat {
+  animation-name: wowp-icon-beat;
+  animation-timing-function: ease-in-out;
+}
+.bubble-menu .bm-icon.-bounce {
+  animation-name: wowp-icon-bounce;
+  animation-timing-function: cubic-bezier(0.28, 0.84, 0.42, 1);
+}
+.bubble-menu .bm-icon.-fade {
+  animation-name: wowp-icon-fade;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+}
+.bubble-menu .bm-icon.-beat-fade {
+  animation-name: wowp-icon-beat-fade;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+}
+.bubble-menu .bm-icon.-flip {
+  animation-name: wowp-icon-flip;
+  animation-timing-function: ease-in-out;
+}
+.bubble-menu .bm-icon.-shake {
+  animation-name: wowp-icon-shake;
+  animation-timing-function: linear;
+}
+.bubble-menu .bm-icon.-spin {
+  animation-name: wowp-icon-spin;
+  animation-timing-function: linear;
+}
+.bubble-menu [popover] {
+  max-inline-size: var(--popover-inline);
+  padding: var(--popover-padding);
+  border-color: var(--popover-border-color);
+  font-size: var(--popover-size);
+  max-block-size: var(--popover-block);
+  margin: auto;
+}
+.bubble-menu [popover] a {
+  cursor: pointer;
+}
+.bubble-menu [popover]::backdrop {
+  background-color: var(--popover-backdrop);
+}
+.bubble-menu.-top {
+  inset: 20px auto auto 50%;
+  transform: translateX(-50%);
+}
+.bubble-menu.-top-left {
+  inset: 20px auto auto 20px;
+}
+.bubble-menu.-top-right {
+  inset: 20px 20px auto auto;
+}
+.bubble-menu.-right {
+  inset: 50% 20px auto auto;
+  transform: translateY(-50%);
+}
+.bubble-menu.-left {
+  inset: 50% auto auto 20px;
+  transform: translateY(-50%);
+}
+.bubble-menu.-bottom {
+  inset: auto auto 20px 50%;
+  transform: translateX(-50%);
+}
+.bubble-menu.-bottom-left {
+  inset: auto auto 20px 20px;
+}
+.bubble-menu.-bottom-right {
+  inset: auto 20px 20px auto;
+}
+.bubble-menu .bm-item {
+  transition-property: opacity, transform, rotate, scale;
+  transition-duration: var(--duration);
+}
+.bubble-menu.-active .bm-toggle.-stop-animation .bm-icon {
+  animation-play-state: paused;
+}
+.bubble-menu.-active .bm-toggle:hover[data-label]::after, .bubble-menu.-active .bm-toggle.-visible[data-label]::after {
+  opacity: 0;
+  transition: opacity var(--duration);
+  visibility: hidden;
+}
+.bubble-menu.-active .bm-toggle .bm-icon {
+  rotate: calc(360deg + var(--icon-rotate));
+}
+.bubble-menu.-active .bm-item {
+  --x: 0px;
+  --y: 0px;
+  transform: translate(var(--x), var(--y));
+}
+.bubble-menu.-active .bm-link.-visible[data-label]::after {
+  opacity: 1;
+  transition: opacity var(--duration);
+  transition-delay: var(--duration);
+  visibility: visible;
+}
+.bubble-menu.-active .bm-link:hover[data-label]::after {
+  opacity: 1;
+  transition: opacity var(--duration);
+  visibility: visible;
+}
+.bubble-menu.-active.-effect-obo .bm-link.-visible[data-label]::after {
+  transition-delay: calc(var(--delay) + var(--duration));
+}
+.bubble-menu.-effect-obo .bm-item {
+  --delay: 0s;
+  transition-delay: var(--delay);
+}
+.bubble-menu.-effect-obo .bm-link {
+  transition-duration: var(--duration);
+  transition-timing-function: ease;
+  transition-delay: 0s, 0s, var(--delay), var(--delay);
+}
+.bubble-menu.-effect-fade .bm-item {
+  opacity: 0;
+}
+.bubble-menu.-effect-fade.-active .bm-item {
+  opacity: 1;
+}
+.bubble-menu.-effect-rotate.-active .bm-link {
+  rotate: 360deg;
+}
+.bubble-menu.-effect-scale .bm-link {
+  scale: 0.1;
+}
+.bubble-menu.-effect-scale.-active .bm-link {
+  scale: 1;
+}
+.bubble-menu.-circle {
+  --radius: 50%;
+  --label-radius: 0.5em;
+}
+.bubble-menu.-rounded {
+  --radius: 25%;
+  --label-radius: 0.25em;
+}
+.bubble-menu.-ellipse {
+  --radius: 25% 75%;
+  --label-radius: 0.25em 0.5em;
+}
+.bubble-menu.-square {
+  --radius: 0;
+  --label-radius: 0;
+}
+.bubble-menu.-size-md {
+  --size: 16px;
+}
+.bubble-menu.-size-sm {
+  --size: 14px;
+}
+.bubble-menu.-size-xs {
+  --size: 12px;
+}
+.bubble-menu.-size-lg {
+  --size: 18px;
+}
+.bubble-menu.-size-xl {
+  --size: 20px;
+}
+.bubble-menu.-size-xxl {
+  --size: 22px;
+}
+.bubble-menu.-shadow {
+  --shadow: 0 0 6px rgba(0, 0, 0, .5);
+}
+
+@keyframes wowp-icon-beat {
+  0%, 90% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.25);
+  }
+}
+@keyframes wowp-icon-bounce {
+  0% {
+    transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    transform: scale(1.1, 0.9) translateY(0);
+  }
+  30% {
+    transform: scale(0.9, 1.1) translateY(-0.25em);
+  }
+  50% {
+    transform: scale(1.05, 0.95) translateY(0);
+  }
+  57% {
+    transform: scale(1, 1) translateY(-0.125em);
+  }
+  64% {
+    transform: scale(1, 1) translateY(0);
+  }
+  100% {
+    transform: scale(1, 1) translateY(0);
+  }
+}
+@keyframes wowp-icon-fade {
+  50% {
+    opacity: 0.4;
+  }
+}
+@keyframes wowp-icon-beat-fade {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.125);
+  }
+}
+@keyframes wowp-icon-flip {
+  50% {
+    transform: rotate3d(0, 1, 0, -180deg);
+  }
+}
+@keyframes wowp-icon-shake {
+  0% {
+    transform: rotate(-15deg);
+  }
+  4% {
+    transform: rotate(15deg);
+  }
+  8%, 24% {
+    transform: rotate(-18deg);
+  }
+  12%, 28% {
+    transform: rotate(18deg);
+  }
+  16% {
+    transform: rotate(-22deg);
+  }
+  20% {
+    transform: rotate(22deg);
+  }
+  32% {
+    transform: rotate(-12deg);
+  }
+  36% {
+    transform: rotate(12deg);
+  }
+  40%, 100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes wowp-icon-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
