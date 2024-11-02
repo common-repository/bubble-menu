@@ -37,7 +37,7 @@ class Settings {
 
 	public static function save_item() {
 
-		$verify = AdminActions::verify(WOWP_Plugin::PREFIX . '_settings');
+		$verify = AdminActions::verify( WOWP_Plugin::PREFIX . '_settings' );
 
 		if ( ! $verify ) {
 			return false;
@@ -47,7 +47,7 @@ class Settings {
 			return false;
 		}
 
-		$id = absint( $_POST['tool_id'] );
+		$id = isset( $_POST['tool_id'] ) ? absint( wp_unslash( $_POST['tool_id'] ) ) : 0;
 
 		$settings = apply_filters( WOWP_Plugin::PREFIX . '_save_settings', '' );
 
@@ -56,10 +56,10 @@ class Settings {
 		$settings     = array_diff_key( $settings, $keys_flipped );
 
 		$data    = [
-			'title'  => isset( $_POST['title'] ) ? sanitize_text_field( wp_unslash($_POST['title'] )) : '',
+			'title'  => isset( $_POST['title'] ) ? sanitize_text_field( wp_unslash( $_POST['title'] ) ) : '',
 			'status' => isset( $_POST['status'] ) ? 1 : 0,
 			'mode'   => isset( $_POST['mode'] ) ? 1 : 0,
-			'tag'    => isset( $_POST['tag'] ) ? sanitize_text_field( wp_unslash($_POST['tag'] )) : '',
+			'tag'    => isset( $_POST['tag'] ) ? sanitize_text_field( wp_unslash( $_POST['tag'] ) ) : '',
 			'param'  => maybe_serialize( $settings ),
 		];
 		$formats = [
@@ -87,7 +87,7 @@ class Settings {
 
 	public static function deactivate_item( $id = 0 ): void {
 
-		$verify = AdminActions::verify(WOWP_Plugin::PREFIX . '_deactivate_item');
+		$verify = AdminActions::verify( WOWP_Plugin::PREFIX . '_deactivate_item' );
 
 		if ( ! $verify ) {
 			return;
@@ -103,7 +103,7 @@ class Settings {
 
 
 	public static function activate_item( $id = 0 ): void {
-		$verify = AdminActions::verify(WOWP_Plugin::PREFIX . '_activate_item');
+		$verify = AdminActions::verify( WOWP_Plugin::PREFIX . '_activate_item' );
 
 		if ( ! $verify ) {
 			return;
@@ -118,7 +118,7 @@ class Settings {
 	}
 
 	public static function deactivate_mode( $id = 0 ): void {
-		$verify = AdminActions::verify(WOWP_Plugin::PREFIX . '_deactivate_mode');
+		$verify = AdminActions::verify( WOWP_Plugin::PREFIX . '_deactivate_mode' );
 
 		if ( ! $verify ) {
 			return;
@@ -133,7 +133,7 @@ class Settings {
 	}
 
 	public static function activate_mode( $id = 0 ): void {
-		$verify = AdminActions::verify(WOWP_Plugin::PREFIX . '_activate_mode');
+		$verify = AdminActions::verify( WOWP_Plugin::PREFIX . '_activate_mode' );
 
 		if ( ! $verify ) {
 			return;
@@ -153,14 +153,14 @@ class Settings {
 			return false;
 		}
 
-		$action = isset( $_REQUEST['action'] ) ? sanitize_text_field( $_REQUEST['action'] ) : 'update';
+		$action = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : 'update';
 		$result = DBManager::get_data_by_id( $id );
 
 		if ( empty( $result ) || empty( $result->param ) ) {
 			return false;
 		}
 
-		$param = maybe_unserialize( $result->param );
+		$param           = maybe_unserialize( $result->param );
 		$param['title']  = $result->title;
 		$param['status'] = $result->status;
 		$param['mode']   = $result->mode;

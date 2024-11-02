@@ -66,13 +66,24 @@ class ImporterExporter {
 			return;
 		}
 
-        if ( self::get_file_extension( sanitize_text_field( $_FILES['import_file']['name'] ) ) !== 'json' ) {
+		if ( ! isset( $_FILES['import_file'] ) || empty( $_FILES['import_file']['name'] ) ) {
+			wp_die( esc_attr__( 'Please select a file to import', 'bubble-menu' ),
+				esc_attr__( 'Error', 'bubble-menu' ),
+				[ 'response' => 400 ] );
+		}
+
+		if ( self::get_file_extension( sanitize_text_field( $_FILES['import_file']['name'] ) ) !== 'json' ) {
 			wp_die(
 				esc_html__( 'Please upload a valid .json file', 'bubble-menu' ),
 				esc_html__( 'Error', 'bubble-menu' ),
 				[ 'response' => 400 ] );
 		}
 
+		if ( empty( $_FILES['import_file']['tmp_name'] ) ) {
+			wp_die( esc_attr__( 'Please select a file to import', 'bubble-menu' ),
+				esc_attr__( 'Error', 'bubble-menu' ),
+				[ 'response' => 400 ] );
+		}
 
 		$import_file = sanitize_text_field( $_FILES['import_file']['tmp_name'] );
 		$settings    = wp_json_file_decode( $import_file );

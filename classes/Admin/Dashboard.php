@@ -44,9 +44,9 @@ class Dashboard {
 	public static function footer_text( $footer_text ) {
 		global $pagenow;
 
-        $page = isset( $_GET['page'] ) ? sanitize_text_field($_GET['page']) : '';
+		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
-		if ( $pagenow === 'admin.php' && ( !empty($page) && $page === WOWP_Plugin::SLUG ) ) {
+		if ( $pagenow === 'admin.php' && ( ! empty( $page ) && $page === WOWP_Plugin::SLUG ) ) {
 			$text = sprintf(
 			/* translators: 1: Rating link (URL), 2: Plugin name */
 				__( 'Thank you for using <b>%2$s</b>! Please <a href="%1$s" target="_blank">rate us</a>', 'bubble-menu' ),
@@ -127,7 +127,8 @@ class Dashboard {
                         </div>
 					<?php endif; ?>
                     <h1><?php echo esc_html( WOWP_Plugin::info( 'name' ) ); ?> <sup
-                                class="wpie-version"><?php echo esc_html( WOWP_Plugin::info( 'version' ) ); ?></sup></h1>
+                                class="wpie-version"><?php echo esc_html( WOWP_Plugin::info( 'version' ) ); ?></sup>
+                    </h1>
                     <a href="<?php echo esc_url( Link::add_new_item() ); ?>"
                        class="button button-primary"><?php esc_html_e( 'Add New', 'bubble-menu' ); ?>
                     </a>
@@ -154,7 +155,7 @@ class Dashboard {
 
 		$current_page = self::get_current_page();
 
-		$action = ( isset( $_REQUEST["action"] ) ) ? sanitize_text_field( $_REQUEST["action"] ) : '';
+		$action = ( isset( $_REQUEST["action"] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST["action"] ) ) : '';
 
 		echo '<h2 class="nav-tab-wrapper wpie-nav-tab-wrapper">';
 		foreach ( $pages as $key => $page ) {
@@ -176,7 +177,7 @@ class Dashboard {
 	public static function get_current_page(): string {
 		$default = DashboardHelper::first_file( 'pages' );
 
-		return ( isset( $_REQUEST["tab"] ) ) ? sanitize_text_field( $_REQUEST["tab"] ) : $default;
+		return ( isset( $_REQUEST["tab"] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST["tab"] ) ) : $default;
 	}
 
 	public static function include_pages(): void {

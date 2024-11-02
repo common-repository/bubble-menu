@@ -3,9 +3,9 @@ Contributors: Wpcalc, lobov
 Donate link: https://wow-estore.com/item/bubble-menu-pro/
 Tags: sticky, floating menu, nav menu, fixed, menu
 Requires at least: 5.5
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.0
+Stable tag: 4.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,8 +89,12 @@ section. Or unzip the archive and upload the folder to the plugins directory `/w
 4. Display Rules
 
 == Changelog ==
-= 4.0 =
+= 4.0.1 =
+* Fixed: main icon in the admin menu.
+* Fixed: minor bugs
+* Update: translate file
 
+= 4.0 =
 * Added: Create unlimited sub-buttons.
 * Added: Ability to set the shapes to buttons: Circle, Rounded, Ellipse, Square
 * Added: Two animations for opening the buttons: One by one and All at once

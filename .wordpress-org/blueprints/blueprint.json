@@ -15,7 +15,7 @@
       "step": "installPlugin",
       "pluginZipFile": {
         "resource": "url",
-        "url": "https://downloads.wordpress.org/plugin/bubble-menu.4.0.zip"
+        "url": "https://downloads.wordpress.org/plugin/bubble-menu.4.0.1.zip"
       },
       "options": {
         "activate": true

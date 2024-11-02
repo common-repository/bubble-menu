@@ -40,6 +40,7 @@ class WOWP_Admin {
         <div class="wpie-links">
             <a href="<?php echo esc_url( WOWP_Plugin::info( 'pro' ) ); ?>" target="_blank">PRO Plugin</a>
             <a href="<?php echo esc_url( WOWP_Plugin::info( 'rating' ) ); ?>" target="_blank" class="wpie-color-orange">Rating</a>
+            <a href="https://www.wordfence.com/r/a0fe3fadb6e08d58/products/wordfence-free/" class="wpie-color-success" target="_blank">Secure your site</a>
         </div>
 		<?php
 	}
@@ -48,8 +49,13 @@ class WOWP_Admin {
 
 		$param = ! empty( $_POST['param'] ) ? map_deep( $_POST['param'], 'sanitize_text_field' ) : [];
 
-		$param['label'] = $this->sanitize_tooltip( $_POST['param']['label'] );
-		$param['emoji'] = $this->sanitize_tooltip( $_POST['param']['emoji'] );
+        if(!empty($_POST['param']['label'])) {
+	        $param['label'] = $this->sanitize_tooltip( $_POST['param']['label'] );
+        }
+
+        if(!empty($_POST['param']['emoji'])) {
+	        $param['emoji'] = $this->sanitize_tooltip( $_POST['param']['emoji'] );
+        }
 
 		if ( isset( $_POST['param']['item']['label'] ) ) {
 			$param['item']['label'] = map_deep( $_POST['param']['item']['label'], array(
@@ -111,7 +117,7 @@ class WOWP_Admin {
 		wp_enqueue_style( $slug. '-fontawesome', $url_assets . '/fontawesome/css/all.min.css', [], '6.6' );
 
 		$fonticonpicker_js = $url_assets . 'fonticonpicker/js/jquery.fonticonpicker.js';
-		wp_enqueue_script( $slug . '-fonticonpicker', $fonticonpicker_js, array( 'jquery' ), $version );
+		wp_enqueue_script( $slug . '-fonticonpicker', $fonticonpicker_js, array( 'jquery' ), $version, true );
 
 		$fonticonpicker_css = $url_assets . 'fonticonpicker/css/base/jquery.fonticonpicker.css';
 		wp_enqueue_style( $slug . '-fonticonpicker', $fonticonpicker_css, null, $version  );

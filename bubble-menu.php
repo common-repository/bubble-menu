@@ -1,9 +1,9 @@
 <?php
 /**
  *  Plugin Name:       Bubble Menu
- *  Plugin URI:        https://wordpress.org/plugins/bubble-menu
+ *  Plugin URI:        https://wow-estore.com/item/bubble-menu-pro/
  *  Description:       Creating awesome circle menu with icons.
- *  Version:           4.0
+ *  Version:           4.0.1
  *  Author:            Wow-Company
  *  Author URI:        https://wow-estore.com/
  *  License:           GPL-2.0+
